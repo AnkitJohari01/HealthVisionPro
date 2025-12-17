@@ -1,0 +1,932 @@
+/* =========================================
+   GLOBAL ROOT THEME & FOUNDATIONS
+========================================= */
+:root {
+  --font-base: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --radius: 14px;
+
+  --accent: #4A63FF;
+
+  --preview-size: 360px;
+  --report-font: 18px;
+}
+
+/* =========================================
+   THEME VARIABLES (SOURCE OF TRUTH)
+========================================= */
+:root[data-theme="light"] {
+  --bg: #eef3ff;
+  --text: #1e1e1e;
+  --card-bg: #ffffff;
+  --card-border: #dcdcdc;
+}
+
+:root[data-theme="dark"] {
+  --bg: #0f1115;
+  --text: #f2f2f2;
+  --card-bg: #1a1c22;
+  --card-border: #2a2d36;
+}
+
+:root[data-theme="blue"] {
+  --bg: #e7f0ff;
+  --text: #003366;
+  --card-bg: #ffffff;
+  --card-border: #99bfff;
+}
+
+:root[data-theme="contrast"] {
+  --bg: #000000;
+  --text: #ffff00;
+  --card-bg: #000000;
+  --card-border: #ffff00;
+}
+
+/* =========================================
+   GLOBAL RESET + BODY
+========================================= */
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-base);
+  overflow-x: hidden;
+}
+
+/* =========================================
+   WRAPPER
+========================================= */
+.wrapper {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* =========================================
+   TABS
+========================================= */
+.tabs {
+  display: flex;
+  gap: 14px;
+  border-bottom: 1px solid var(--card-border);
+  overflow-x: auto;
+}
+
+.tab {
+  padding: 10px 18px;
+  font-size: 1.05em;
+  border-radius: var(--radius) var(--radius) 0 0;
+  cursor: pointer;
+  white-space: nowrap;
+  opacity: 0.6;
+  transition: 0.25s;
+}
+
+.tab.active {
+  background: rgba(74, 99, 255, 0.15);
+  color: var(--text);
+  box-shadow: 0 0 0 2px rgba(74, 99, 255, 0.4);
+  transform: translateY(2px);
+  opacity: 1;
+}
+
+/* =========================================
+   CARD COMPONENT
+========================================= */
+.card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 22px;
+  border: 1px solid var(--card-border);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+  color: var(--text);
+}
+
+/* =========================================
+   HEADINGS
+========================================= */
+h1, h2, h3 {
+  margin: 0 0 14px;
+  font-weight: 600;
+}
+
+/* =========================================
+   BUTTONS
+========================================= */
+button,
+.primary {
+  background: var(--accent);
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  font-size: 1.05rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+
+button:hover {
+  background: #2032a4;
+  transform: translateY(-1px);
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* =========================================
+   RADIOLOGY PREVIEW
+========================================= */
+.radiology-preview {
+  width: var(--preview-size);
+  max-width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--card-border);
+  padding: 8px;
+  background: #fff;
+  object-fit: contain;
+}
+
+/* =========================================
+   REPORT / MARKDOWN / SUMMARY FIX
+========================================= */
+.radiology-report,
+.card p,
+.card li {
+  color: var(--text);
+}
+
+.card ul {
+  padding-left: 20px;
+}
+
+/* =========================================
+   DUAL PANEL LAYOUT
+========================================= */
+.dual-panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+
+@media (max-width: 820px) {
+  .dual-panel {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================
+   SCROLL FIXES
+========================================= */
+* {
+  box-sizing: border-box;
+}
+
+nav,
+.tabs {
+  overflow: hidden;
+}
+
+/* Allow settings dropdown to escape header */
+header {
+  overflow: visible;
+}
+
+
+
+.card pre {
+  background: var(--card-bg);
+  color: var(--text);
+}
+
+
+/* ==============================
+   AI SUMMARY THEME FIX
+============================== */
+
+:root[data-theme="dark"] .ai-summary {
+  background: #1e1e1e !important;
+  color: #ffffff !important;
+}
+
+:root[data-theme="light"] .ai-summary {
+  background: #f8f9ff !important;
+  color: #000000 !important;
+}
+
+:root[data-theme="blue"] .ai-summary {
+  background: #ffffff !important;
+  color: #003366 !important;
+}
+
+:root[data-theme="contrast"] .ai-summary {
+  background: #000000 !important;
+  color: #ffff00 !important;
+}
+
+/* Markdown text inside summary */
+.ai-summary p,
+.ai-summary li {
+  color: inherit !important;
+}
+
+
+
+
+
+/* Normalize inner form controls so cards look identical */
+.card input,
+.card select {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  box-shadow: none;
+}
+
+.card {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+
+
+
+
+
+
+
+
+
+/* ==============================
+   PATIENT DETAILS – PROMINENT
+============================== */
+.patient-details {
+  padding: 32px;              /* Bigger internal spacing */
+  font-size: 1.05rem;         /* Slightly larger text */
+}
+
+/* Headline stronger */
+.patient-details h3 {
+  font-size: 1.35rem;
+  margin-bottom: 20px;
+}
+
+/* Make key-value rows breathe */
+.patient-details b {
+  font-weight: 600;
+}
+
+.patient-details div {
+  line-height: 1.9;
+}
+
+
+
+
+
+
+/* ==============================
+   THEME SWITCH ANIMATION
+============================== */
+
+/* Animate everything that visually changes */
+html,
+body,
+#root,
+.card,
+button,
+input,
+select {
+  transition:
+    background-color 0.35s ease,
+    color 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+/* Prevent weird input flashes */
+input,
+select {
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+
+body {
+  transition: background 0.4s ease;
+}
+
+
+
+
+
+
+
+
+
+.settings-wrapper {
+  position: relative;
+}
+
+.settings-menu {
+  position: absolute;
+  top: 46px;
+  right: 0;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 6px 0;
+  min-width: 160px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  display: none;
+  z-index: 1000;
+}
+
+.settings-menu div {
+  padding: 10px 14px;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.settings-menu div:hover {
+  background: rgba(74, 99, 255, 0.1);
+}
+
+.settings-wrapper:hover .settings-menu {
+  display: block;
+}
+
+
+
+
+
+
+
+.settings-wrapper {
+  position: relative;
+}
+
+.settings-menu {
+  position: absolute;
+  top: 48px;
+  right: 0;
+  z-index: 9999;   /* ensures it stays above cards */
+}
+
+
+
+
+
+
+
+
+/* ==============================
+   SETTINGS HOVER MENU
+============================== */
+
+.settings-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/* Hidden by default */
+.settings-menu {
+  position: absolute;
+  top: 110%;
+  right: 0;
+  min-width: 180px;
+
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+
+  padding: 8px 0;
+  z-index: 1000;
+
+  display: none;
+}
+
+/* Show menu on hover */
+.settings-wrapper:hover .settings-menu {
+  display: block;
+}
+
+/* Menu items */
+.settings-menu div {
+  padding: 10px 16px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s;
+  color: var(--text);
+}
+
+/* Hover effect */
+.settings-menu div:hover {
+  background: rgba(74, 99, 255, 0.15);
+}
+
+
+
+/* Input text color when typing */
+.card input {
+  color: var(--text);   /* matches current theme text */
+}
+
+/* Optional: placeholder color */
+.card input::placeholder {
+  color: rgba(150, 150, 150, 0.6);
+}
+
+
+
+
+/* Fix dropdown colors in dark mode */
+select {
+  background-color: #1f2933;
+  color: #ffffff;
+}
+
+select option {
+  background-color: #1f2933;
+  color: #ffffff;
+}
+
+/* Highlighted / hovered option */
+select option:hover,
+select option:checked {
+  background-color: #3e6df6;
+  color: #ffffff;
+}
+
+
+
+
+
+
+/* =====================================
+   COLORFUL BARS — RECHARTS (CSS ONLY)
+===================================== */
+
+/* Target each bar rectangle */
+.recharts-bar-rectangle:nth-child(1) path {
+  fill: #4A63FF;
+}
+.recharts-bar-rectangle:nth-child(2) path {
+  fill: #22c55e;
+}
+.recharts-bar-rectangle:nth-child(3) path {
+  fill: #f59e0b;
+}
+.recharts-bar-rectangle:nth-child(4) path {
+  fill: #ec4899;
+}
+.recharts-bar-rectangle:nth-child(5) path {
+  fill: #8b5cf6;
+}
+.recharts-bar-rectangle:nth-child(6) path {
+  fill: #06b6d4;
+}
+
+/* Loop colors for more bars */
+.recharts-bar-rectangle:nth-child(7) path {
+  fill: #4A63FF;
+}
+.recharts-bar-rectangle:nth-child(8) path {
+  fill: #22c55e;
+}
+.recharts-bar-rectangle:nth-child(9) path {
+  fill: #f59e0b;
+}
+.recharts-bar-rectangle:nth-child(10) path {
+  fill: #ec4899;
+}
+
+/* Rounded bar tops (nice polish) */
+.recharts-bar-rectangle path {
+  rx: 6;
+  ry: 6;
+  transition: fill 0.25s ease, opacity 0.25s ease;
+}
+
+/* Hover effect */
+.recharts-bar-rectangle:hover path {
+  opacity: 0.85;
+}
+
+
+
+
+
+
+/* ==============================
+   GRAPHICAL INSIGHTS SECTIONS
+============================== */
+
+/* Main section wrapper */
+.insight-section {
+  margin-top: 28px;
+  padding-top: 8px;
+}
+
+/* Section titles */
+.insight-section h3 {
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+/* Sub-headings (chart titles) */
+.insight-section h4 {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+  opacity: 0.9;
+}
+
+/* Graphical Insights Sections */
+.graph-section {
+  margin-top: 32px;
+  padding: 24px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Two charts row */
+.graph-row {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+/* Funnel section emphasis */
+.graph-funnel {
+  margin-top: 48px;
+  padding: 28px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+
+
+
+
+
+/* ===============================
+   GRAPHICAL INSIGHTS – POLISH
+================================ */
+
+/* Root container */
+.graph-root {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* Subtitle text */
+.graph-subtitle {
+  opacity: 0.7;
+  margin-bottom: 8px;
+}
+
+/* Section wrapper */
+.graph-section {
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.02),
+    rgba(255,255,255,0.01)
+  );
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 22px;
+}
+
+/* Section title */
+.graph-section-title {
+  font-size: 1.15rem;
+  margin-bottom: 18px;
+  letter-spacing: 0.3px;
+}
+
+/* Row layout */
+.graph-row {
+  display: flex;
+  gap: 24px;
+  align-items: stretch;
+}
+
+/* Individual chart cards */
+.graph-box {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 18px;
+  flex: 1;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Hover elevation */
+.graph-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+}
+
+/* Wide chart (funnel) */
+.graph-box.wide {
+  width: 100%;
+}
+
+/* Card headings */
+.graph-box h4 {
+  margin-bottom: 14px;
+  font-weight: 600;
+}
+
+/* Funnel hint text */
+.graph-hint {
+  font-size: 14px;
+  opacity: 0.65;
+  margin-bottom: 16px;
+}
+
+/* Loading / error */
+.graph-loading {
+  opacity: 0.7;
+}
+
+.graph-error {
+  color: #ff6b6b;
+}
+
+/* ===============================
+   LIGHT MODE SUPPORT
+================================ */
+body.light .graph-section {
+  background: #ffffff;
+  border: 1px solid #e6e8ee;
+}
+
+body.light .graph-box {
+  background: #f9fafc;
+  border: 1px solid #e2e6f0;
+}
+
+body.light .graph-box:hover {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media (max-width: 1100px) {
+  .graph-row {
+    flex-direction: column;
+  }
+
+  .graph-box {
+    width: 100%;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* Reduce gap between overview section and funnel section */
+.graph-section {
+  margin-bottom: 18px;   /* was visually too large */
+  padding-bottom: 18px;
+}
+
+/* Specifically tighten the funnel section spacing */
+.graph-section + .graph-section {
+  margin-top: 0px;      /* controls gap between stacked sections */
+}
+
+/* Reduce space above funnel title */
+.graph-section h3 {
+  margin-top: 0;
+}
+
+/* Reduce paragraph spacing under section titles */
+.graph-hint {
+  margin-bottom: 10px;
+}
+
+/* Reduce extra padding inside wide funnel card */
+.graph-box.wide {
+  padding-top: 14px;
+}
+
+
+
+
+
+.markdown h1 {
+  font-size: 1.6rem !important;
+  margin-bottom: 10px;
+}
+
+.markdown h2 {
+  font-size: 1.4rem !important;
+}
+
+.markdown h3 {
+  font-size: 1.2rem !important;
+}
+
+
+
+/* Markdown style override */
+.ai-markdown {
+  font-size: 0.9rem;        /* reduce base font */
+  line-height: 1.45;
+  color: #e5e7eb;           /* subtle gray text for dark mode */
+}
+
+.ai-markdown h1 {
+  font-size: 1.4rem;        /* smaller main heading */
+  margin-bottom: 0.6rem;
+}
+
+.ai-markdown h2 {
+  font-size: 1.2rem;        
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.ai-markdown h3 {
+  font-size: 1rem;
+}
+
+.ai-markdown p {
+  margin: 0.35rem 0;
+}
+
+.ai-markdown ul {
+  padding-left: 1.2rem;
+  margin-top: 0.3rem;
+}
+
+.ai-markdown li {
+  margin-bottom: 0.25rem;
+  font-size: 1.0rem;
+}
+
+
+
+
+.graph-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;   /* spacing between boxes */
+}
+
+.card .ai-markdown h1,
+.card .ai-markdown h2,
+.card .ai-markdown h3 {
+  color: var(--text) !important;
+  opacity: 1 !important;
+}
+
+.ai-markdown ol { list-style: none; padding-left: 0; }
+
+.ai-markdown strong { font-weight: 400; }
+.ai-markdown strong { font-weight: 500; }
+.ai-markdown li:empty { display: none; }
+
+
+/* Voice AI – section titles like Summary, Key Symptoms, etc. */
+.ai-markdown p > strong {
+  font-size: 1.45rem;   /* matches left-side Summary */
+  font-weight: 600;
+  display: block;
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+/* Voice AI – bullet points text */
+.ai-markdown ul li {
+  font-size: 1.1rem;    /* slightly bigger, very readable */
+  line-height: 1.6;
+}
+
+.ai-markdown strong:first-child {
+  font-size: 1.45rem;
+  font-weight: 600;
+}
+
+
+/* Value text under section headings (Duration, Severity, Red Flags, etc.) */
+.ai-markdown p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+
+/* Reduce space below "Graphical Insights" heading */
+h2 {
+  margin-bottom: 0px;
+}
+
+/* Reduce space between heading description and card */
+h2 + p {
+  margin-bottom: 4px;
+}
+
+
+
+
+.graphical-insights h2 { margin-bottom: 0px; }
+.graphical-insights p { margin-bottom: 6px; }
+
+
+
+
+
+
+/* Fix select text color in LIGHT theme */
+:root[data-theme="light"] select {
+  color: #000 !important;
+  background-color: #fff !important;
+}
+
+
+:root[data-theme="light"] select option {
+  color: #000;
+  background-color: #fff;
+}
+
+
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text) !important;
+}
+   
+
+
+
+
+
+
+
+
+/* ===============================
+   Patient Search Dropdown (DROP-UP FIX)
+================================ */
+
+.patient-search-dropdown {
+  position: absolute;
+
+  /* 🔥 OPEN UPWARD & ATTACH */
+  bottom: 100%;          /* open above input */
+  margin-bottom: 0;     /* ❌ remove gap */
+  transform: translateY(1px); /* overlap input border */
+
+  left: 0;
+  right: 0;
+
+  max-height: 220px;
+  overflow-y: auto;
+
+  background-color: var(--card-bg);
+  color: var(--text);
+
+  border: 1px solid var(--card-border);
+  border-bottom: none;  /* 🔧 seamless join */
+  border-radius: 10px 10px 0 0;
+
+  z-index: 9999; /* VERY IMPORTANT */
+  box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.35);
+}
+
+.patient-search-option {
+  padding: 10px 12px;
+  cursor: pointer;
+  color: var(--text);
+  border-bottom: 1px solid var(--card-border);
+}
+
+.patient-search-option:hover {
+  background-color: rgba(74, 99, 255, 0.18);
+}
