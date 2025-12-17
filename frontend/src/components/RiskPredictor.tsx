@@ -59,7 +59,7 @@ export default function RiskPredictor() {
     const timer = setTimeout(async () => {
       try {
         const res = await fetch(
-          `http://localhost:8000/api/patients/by-visits?count=${visitCount}`
+          `${API_BASE}/api/patients/by-visits?count=${visitCount}`
         );
         const data = await res.json();
         if (!res.ok) throw new Error(data.detail || "Failed to fetch");
