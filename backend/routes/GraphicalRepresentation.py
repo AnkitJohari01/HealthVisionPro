@@ -1,6 +1,8 @@
 from fastapi import APIRouter
 from sqlalchemy import text
 from utils.db import engine   # existing DB connection
+if engine is None:
+    print("DB not available. GraphicalRepresentation will use fallback logic.")
 
 router = APIRouter()
 
