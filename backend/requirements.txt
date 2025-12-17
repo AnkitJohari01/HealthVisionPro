@@ -10,3 +10,4 @@ pandas==2.3.3
 pinecone==8.0.0
 shap==0.50.0
 SQLAlchemy==2.0.45
+psycopg[binary]
