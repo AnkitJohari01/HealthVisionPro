@@ -13,4 +13,4 @@ SQLAlchemy==2.0.45
 scikit-learn
 xgboost
 psycopg[binary]
-VITE_API_BASE=https://healthvisionpro.onrender.com
+
