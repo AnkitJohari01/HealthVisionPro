@@ -11,6 +11,7 @@ export default function RiskPredictor() {
   const [visitCount, setVisitCount] = useState("");
   const [visitResults, setVisitResults] = useState<any[]>([]);
   const [visitError, setVisitError] = useState("");
+  const API_BASE = import.meta.env.VITE_API_BASE;
 
   // UI-only state (UNCHANGED)
   const [inputValue, setInputValue] = useState("");
@@ -38,7 +39,7 @@ export default function RiskPredictor() {
   useEffect(() => {
     async function loadAccuracy() {
       try {
-        const res = await fetch("http://localhost:8000/api/model-metrics");
+        const res = await fetch(`${API_BASE}/api/model-metrics`);
         const data = await res.json();
         setModelAccuracy(Number(data.accuracy));
       } catch {}
