@@ -8,7 +8,6 @@ numpy==2.3.5
 openai==1.83.0
 pandas==2.3.3
 pinecone==8.0.0
-python-dotenv==1.0.1
 shap==0.50.0
 SQLAlchemy==2.0.45
 scikit-learn
