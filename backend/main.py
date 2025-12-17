@@ -28,6 +28,18 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "https://healthvisionpro-frontend.onrender.com",
+        "https://healthvisionpro.onrender.com",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # ------------------------------------------------------
 # Import Routers (VOICE, HISTORY, PREDICT, GRAPH)
 # ------------------------------------------------------
