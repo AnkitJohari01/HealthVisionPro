@@ -89,7 +89,7 @@ export default function RiskPredictor() {
     setDetails(null);
 
     try {
-      const res = await fetch("http://localhost:8000/api/predict-risk", {
+      const res = await fetch(`${API_BASE}/api/predict-risk`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ patient_id: patientId }),
