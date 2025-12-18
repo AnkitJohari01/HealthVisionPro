@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
+const API_BASE = import.meta.env.VITE_API_BASE;
 
 const safeMarkdown = (value: unknown) => {
   if (typeof value === "string") return value.trim();
@@ -134,7 +135,7 @@ export default function UploadRadiologyImage() {
       formData.append("file", file);
 
       try {
-        const res = await fetch("http://localhost:8000/analyze/image", {
+        const res = await fetch(`${API_BASE}/analyze/image`, {
           method: "POST",
           body: formData,
         });
