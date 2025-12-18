@@ -358,29 +358,86 @@ def get_model_metrics():
 # ---------------------------------------------------------
 # NEW ENDPOINT: Get patients who visited X times
 # ---------------------------------------------------------
+# @router.get("/patients/by-visits")
+# async def get_patients_by_visits(count: int):
+#     """
+#     Returns patients from CSV who have visited exactly `count` times.
+#     """
+
+#     try:
+#         filtered = dataset_df[dataset_df["patients_visited"] == count]
+
+#         result = [
+#             {
+#                 "patient_id": row["patient_id"],
+#                 "patient_name": row["Patients_Name"],
+#                 "visit_count": int(row["patients_visited"])
+#             }
+#             for _, row in filtered.iterrows()
+#         ]
+
+#         return {"requested_count": count, "patients": result}
+
+#     except Exception as e:
+#         print("Visit count error:", e)
+#         raise HTTPException(500, "Failed to fetch visit counts")
+
+
+
+
 @router.get("/patients/by-visits")
 async def get_patients_by_visits(count: int):
     """
-    Returns patients from CSV who have visited exactly `count` times.
+    Returns patients who have visited exactly `count` times.
+    Works even if dataset or column is missing.
     """
 
+    if dataset_df is None or dataset_df.empty:
+        return {
+            "requested_count": count,
+            "patients": [],
+            "warning": "Dataset not available"
+        }
+
+    # Detect correct column name safely
+    visit_col = None
+    if "patients_visited" in dataset_df.columns:
+        visit_col = "patients_visited"
+    elif "visit_count" in dataset_df.columns:
+        visit_col = "visit_count"
+
+    if visit_col is None:
+        return {
+            "requested_count": count,
+            "patients": [],
+            "error": "Visit count column not found",
+            "available_columns": list(dataset_df.columns)
+        }
+
     try:
-        filtered = dataset_df[dataset_df["patients_visited"] == count]
+        filtered = dataset_df[dataset_df[visit_col] == count]
 
         result = [
             {
-                "patient_id": row["patient_id"],
-                "patient_name": row["Patients_Name"],
-                "visit_count": int(row["patients_visited"])
+                "patient_id": row.get("patient_id"),
+                "patient_name": row.get("Patients_Name", "Unknown"),
+                "visit_count": int(row[visit_col]),
             }
             for _, row in filtered.iterrows()
         ]
 
-        return {"requested_count": count, "patients": result}
+        return {
+            "requested_count": count,
+            "patients": result
+        }
 
     except Exception as e:
         print("Visit count error:", e)
-        raise HTTPException(500, "Failed to fetch visit counts")
+        return {
+            "requested_count": count,
+            "patients": [],
+            "error": str(e)
+        }
 
 
 
@@ -388,6 +445,60 @@ async def get_patients_by_visits(count: int):
 
 
 
+
+
+# @router.get("/patients/search")
+# async def search_patients(q: str, limit: int = 10):
+#     """
+#     Smart patient search:
+#     - If q is a number → search by visit count
+#     - If q is text → search by patient name
+#     """
+
+#     if dataset_df.empty:
+#         raise HTTPException(500, "Dataset not loaded")
+
+#     q = q.strip()
+
+#     try:
+#         # -------------------------------
+#         # Case 1: Visit count search
+#         # -------------------------------
+#         if q.isdigit():
+#             visit_count = int(q)
+
+#             filtered = dataset_df[
+#                 dataset_df["patients_visited"] == visit_count
+#             ]
+
+#         # -------------------------------
+#         # Case 2: Name search
+#         # -------------------------------
+#         else:
+#             filtered = dataset_df[
+#                 dataset_df["Patients_Name"]
+#                 .astype(str)
+#                 .str.lower()
+#                 .str.contains(q.lower())
+#             ]
+
+#         # -------------------------------
+#         # Format for dropdown
+#         # -------------------------------
+#         results = [
+#             {
+#                 "patient_id": row["patient_id"],
+#                 "patient_name": row["Patients_Name"],
+#                 "patients_visited": int(row["patients_visited"]),
+#             }
+#             for _, row in filtered.head(limit).iterrows()
+#         ]
+
+#         return results
+
+#     except Exception as e:
+#         print("Patient search error:", e)
+#         raise HTTPException(500, "Failed to search patients")
 
 
 
@@ -397,12 +508,16 @@ async def get_patients_by_visits(count: int):
 async def search_patients(q: str, limit: int = 10):
     """
     Smart patient search:
-    - If q is a number → search by visit count
-    - If q is text → search by patient name
+    - Number → search by visit count
+    - Text → search by patient name
     """
 
-    if dataset_df.empty:
-        raise HTTPException(500, "Dataset not loaded")
+    if dataset_df is None or dataset_df.empty:
+        return {
+            "query": q,
+            "patients": [],
+            "warning": "Dataset not available"
+        }
 
     q = q.strip()
 
@@ -413,41 +528,60 @@ async def search_patients(q: str, limit: int = 10):
         if q.isdigit():
             visit_count = int(q)
 
-            filtered = dataset_df[
-                dataset_df["patients_visited"] == visit_count
-            ]
+            visit_col = (
+                "patients_visited"
+                if "patients_visited" in dataset_df.columns
+                else "visit_count"
+                if "visit_count" in dataset_df.columns
+                else None
+            )
+
+            if visit_col is None:
+                return {
+                    "query": q,
+                    "patients": [],
+                    "error": "Visit count column not found"
+                }
+
+            filtered = dataset_df[dataset_df[visit_col] == visit_count]
 
         # -------------------------------
         # Case 2: Name search
         # -------------------------------
         else:
+            if "Patients_Name" not in dataset_df.columns:
+                return {
+                    "query": q,
+                    "patients": [],
+                    "error": "Patient name column not found"
+                }
+
             filtered = dataset_df[
                 dataset_df["Patients_Name"]
-                .astype(str)
-                .str.lower()
-                .str.contains(q.lower())
+                .str.contains(q, case=False, na=False)
             ]
 
-        # -------------------------------
-        # Format for dropdown
-        # -------------------------------
-        results = [
+        result = [
             {
-                "patient_id": row["patient_id"],
-                "patient_name": row["Patients_Name"],
-                "patients_visited": int(row["patients_visited"]),
+                "patient_id": row.get("patient_id"),
+                "patient_name": row.get("Patients_Name", "Unknown"),
+                "visit_count": row.get("patients_visited", row.get("visit_count")),
             }
             for _, row in filtered.head(limit).iterrows()
         ]
 
-        return results
+        return {
+            "query": q,
+            "patients": result
+        }
 
     except Exception as e:
-        print("Patient search error:", e)
-        raise HTTPException(500, "Failed to search patients")
-
-
-
+        print("Search error:", e)
+        return {
+            "query": q,
+            "patients": [],
+            "error": str(e)
+        }
 
 
 
