@@ -11,6 +11,6 @@ pinecone==8.0.0
 shap==0.50.0
 SQLAlchemy==2.0.45
 scikit-learn
-xgboost
+xgboost==2.0.3
 psycopg[binary]
 
