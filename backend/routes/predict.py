@@ -13,7 +13,7 @@ router = APIRouter()
 # ------------------------------------
 # Load Model + Encoders + Feature Order
 # ------------------------------------
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 MODEL_PATH = os.path.join(BASE_DIR, "xgboost_health_model.pkl")
 ENCODER_PATH = os.path.join(BASE_DIR, "encoders.pkl")
