@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
-
+const API_BASE=import.meta.env.VITE_API_BASE;
 type SimilarCase = {
   score: number;
   analysis: string;
@@ -122,7 +122,8 @@ export default function VoiceAssistant() {
       const formData = new FormData();
       formData.append("file", audioBlob, "voice.webm");
 
-      const res = await fetch("http://localhost:8000/voice/transcribe", {
+      
+      const res = await fetch(`${API_BASE}/voice/transcribe`, {
         method: "POST",
         body: formData,
       });
