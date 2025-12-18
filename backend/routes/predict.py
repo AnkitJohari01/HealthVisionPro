@@ -20,6 +20,14 @@ ENCODER_PATH = os.path.join(BASE_DIR, "encoders.pkl")
 FEATURE_ORDER_PATH = os.path.join(BASE_DIR, "feature_order.pkl")
 CSV_PATH = os.path.join(BASE_DIR, "healthvisionpro_dataset_1000.csv")
 
+try:
+    dataset_df = pd.read_csv(CSV_PATH)
+    print("✅ CSV loaded from:", CSV_PATH)
+except Exception as e:
+    print("❌ CSV load failed:", e)
+    dataset_df = pd.DataFrame()
+
+
 from pathlib import Path
 METRICS_FILE = Path(__file__).resolve().parent / "model_metrics.json"
 
