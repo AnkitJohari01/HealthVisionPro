@@ -11,3 +11,5 @@ pinecone==8.0.0
 shap==0.50.0
 SQLAlchemy==2.0.45
 psycopg[binary]
+xgboost==2.0.3
+
