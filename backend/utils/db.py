@@ -1,6 +1,8 @@
 from dotenv import load_dotenv
 load_dotenv()
-
+import asyncpg        
+import json
+from sqlalchemy import text
 import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
