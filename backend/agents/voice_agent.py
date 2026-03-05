@@ -14,7 +14,7 @@
 #             "You identify symptoms, duration, severity, emotional tone, and risk factors. "
 #             "You always write in simple language for patients AND a clear clinical summary for doctors."
 #         ),
-#         llm="openai/gpt-4o"
+#         llm="openai/gpt-5.1"
 #     )
 
 #     task = Task(
